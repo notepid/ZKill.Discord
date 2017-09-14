@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ZKill.Discord.ZKill
 {
     public class KillMail
     {
         public int KillId { get; set; }
+        public DateTime KillTime { get; set; }
         public float FittedValue { get; set; }
         public float TotalValue { get; set; }
         public string KbUrl { get; set; }

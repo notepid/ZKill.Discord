@@ -40,6 +40,7 @@ namespace ZKill.Discord.ZKill
 
                 var killMail = new KillMail();
                 killMail.KillId = dynamicResult.package.killID;
+                killMail.KillTime = dynamicResult.package.killmail.killTime;
                 killMail.SystemName = dynamicResult.package.killmail.solarSystem.name;
                 killMail.FittedValue = dynamicResult.package.zkb.fittedValue;
                 killMail.TotalValue = dynamicResult.package.zkb.totalValue;
