@@ -66,9 +66,9 @@ namespace ZKill.Discord
                         }
                     }
 
-                    if (appConfig.WatchedCharacters.Any(w => w.EveCharacterId == killMail.KillId))
+                    if (appConfig.WatchedCharacters.Any(w => w.EveCharacterId == killMail.CharacterId))
                     {
-                        var character = appConfig.WatchedCharacters.First(c => c.EveCharacterId == killMail.KillId);
+                        var character = appConfig.WatchedCharacters.First(c => c.EveCharacterId == killMail.CharacterId);
                         _logger.Log(LoggingEventType.Warning, $"{character.StreamerName} got killed while playing character {character.CharacterName}");
 
                         var message =
