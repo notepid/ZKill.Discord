@@ -56,8 +56,10 @@ namespace ZKill.Discord
                             var character = appConfig.WatchedCharacters.First(c => c.EveCharacterId == attacker.CharacterId);
                             _logger.Log(LoggingEventType.Warning, $"{character.CharacterName}({character.StreamerName}) killed {killMail.VictimName}!!!");
 
+                            var killType = killMail.Attackers.Count == 1 ? "solo kill" : "fleet kill";
+
                             var message =
-                                $"{character.StreamerName} scored a kill against {killMail.VictimName}!\n" +
+                                $"{character.StreamerName} scored a {killType} against {killMail.VictimName}!\n" +
                                 $"Eve Time: {killMail.KillTime}\n" +
                                 $"KB: {killMail.KbUrl}\n" +
                                 $"{killMail.VictimName} was in a {killMail.ShipTypeName} and tanked {killMail.DamageTaken} damage\n" +
