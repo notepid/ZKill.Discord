@@ -44,8 +44,8 @@ namespace ZKill.Discord
 
                     _logger.Log($"\tVictim: {killMail.VictimName} flying a {killMail.ShipTypeName} in system \"{killMail.SystemName}\"");
                     _logger.Log($"\t\t{killMail.DamageTaken} damage taken");
-                    _logger.Log($"\t\tFitted value: {killMail.FittedValue.ToString("N", numberFormatingCulture)} ISK");
-                    _logger.Log($"\t\tTotal value: {killMail.TotalValue.ToString("N", numberFormatingCulture)} ISK");
+                    _logger.Log($"\t\tFitted value: {killMail.FittedValue.ToString("N0", numberFormatingCulture)} ISK");
+                    _logger.Log($"\t\tTotal value: {killMail.TotalValue.ToString("N0", numberFormatingCulture)} ISK");
 
                     _logger.Log("\tAttackers:");
                     foreach (var attacker in killMail.Attackers)
@@ -63,7 +63,7 @@ namespace ZKill.Discord
                                 $"Eve Time: {killMail.KillTime}\n" +
                                 $"KB: {killMail.KbUrl}\n" +
                                 $"{killMail.VictimName} was in a {killMail.ShipTypeName} and tanked {killMail.DamageTaken} damage\n" +
-                                $"Total worth: {killMail.TotalValue.ToString("N", numberFormatingCulture)} ISK";
+                                $"Total worth: {killMail.TotalValue.ToString("N0", numberFormatingCulture)} ISK";
                             _discordClient.SendTextMessage(message);
                         }
                     }
@@ -78,7 +78,7 @@ namespace ZKill.Discord
                             $"Eve Time: {killMail.KillTime}\n" +
                             $"KB: {killMail.KbUrl}\n" +
                             $"{killMail.VictimName} was in a {killMail.ShipTypeName} and tanked {killMail.DamageTaken} damage\n" +
-                            $"Total worth: {killMail.TotalValue.ToString("N", numberFormatingCulture)} ISK";
+                            $"Total worth: {killMail.TotalValue.ToString("N0", numberFormatingCulture)} ISK";
                         _discordClient.SendTextMessage(message);
                     }
 
@@ -91,7 +91,7 @@ namespace ZKill.Discord
                             $"{killMail.VictimName} got killed in a {killMail.ShipTypeName} and tanked {killMail.DamageTaken} damage\n" +
                             $"Eve Time: {killMail.KillTime}\n" +
                             $"KB: {killMail.KbUrl}\n" +
-                            $"Total worth: {killMail.TotalValue.ToString("N", numberFormatingCulture)} ISK";
+                            $"Total worth: {killMail.TotalValue.ToString("N0", numberFormatingCulture)} ISK";
                         _discordClientHighValue.SendTextMessage(message);
                     }
 
