@@ -47,7 +47,6 @@ namespace ZKill.Discord
                     _logger.Log($"{killMail.KbUrl}");
 
                     _logger.Log($"\tVictim: {killMail.VictimName} flying a {killMail.ShipTypeName} in system \"{killMail.SystemName}\"");
-                    _logger.Log($"\tVictim: {killMail.ShipTypeName} in system \"{killMail.SystemName}\"");
                     _logger.Log($"\t\t{killMail.DamageTaken} damage taken");
                     _logger.Log($"\t\tFitted value: {killMail.FittedValue.ToString("N0", numberFormatingCulture)} ISK");
                     _logger.Log($"\t\tTotal value: {killMail.TotalValue.ToString("N0", numberFormatingCulture)} ISK");
