@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using ZKill.Discord.Discord;
+using ZKill.Discord.EveData;
 using ZKill.Discord.Logging;
 using ZKill.Discord.Models;
 using ZKill.Discord.ZKill;
@@ -20,18 +21,21 @@ namespace ZKill.Discord
         static void Main(string[] args)
         {
             _logger = new ConsoleLogger();
+            _logger.Log("Staring ZKill.Discord");
 
             var appConfig = JsonConvert.DeserializeObject<AppConfiguration>(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "appsettings.json")));
+
+            var eveData = new EveDataStore(_logger);
+            var eveApiClient = new EveApiClient();
 
             _discordClient = new DiscordClient(appConfig.DiscordWebHookUrl, _logger);
             _discordClientHighValue = new DiscordClient(appConfig.HighValueKills.DiscordWebHookUrlHighValue, _logger);
 
             var numberFormatingCulture = new CultureInfo("en-US");
+            
+            var client = new ZKillboardClient(_logger, eveData, eveApiClient);
 
-            _logger.Log("Staring ZKill.Discord");
             _logger.Log("Press Q to quit.");
-            var client = new ZKillboardClient(_logger);
-
             do
             {
                 while (!Console.KeyAvailable)
@@ -43,6 +47,7 @@ namespace ZKill.Discord
                     _logger.Log($"{killMail.KbUrl}");
 
                     _logger.Log($"\tVictim: {killMail.VictimName} flying a {killMail.ShipTypeName} in system \"{killMail.SystemName}\"");
+                    _logger.Log($"\tVictim: {killMail.ShipTypeName} in system \"{killMail.SystemName}\"");
                     _logger.Log($"\t\t{killMail.DamageTaken} damage taken");
                     _logger.Log($"\t\tFitted value: {killMail.FittedValue.ToString("N0", numberFormatingCulture)} ISK");
                     _logger.Log($"\t\tTotal value: {killMail.TotalValue.ToString("N0", numberFormatingCulture)} ISK");
@@ -50,7 +55,7 @@ namespace ZKill.Discord
                     _logger.Log("\tAttackers:");
                     foreach (var attacker in killMail.Attackers)
                     {
-                        _logger.Log($"\t\t{attacker.Name} in a {attacker.ShipTypeName}");
+                        _logger.Log($"\t\t{attacker.CharacterId} in a {attacker.ShipTypeName}");
                         if (appConfig.WatchedCharacters.Any(w => w.EveCharacterId == attacker.CharacterId))
                         {
                             var character = appConfig.WatchedCharacters.First(c => c.EveCharacterId == attacker.CharacterId);
@@ -88,7 +93,7 @@ namespace ZKill.Discord
 
                         var message =
                             "**High value kill!**\n" +
-                            $"{killMail.VictimName} got killed in a {killMail.ShipTypeName} and tanked {killMail.DamageTaken} damage\n" +
+                            $"{killMail.VictimName} lost a {killMail.ShipTypeName} while tanking {killMail.DamageTaken} damage\n" +
                             $"Eve Time: {killMail.KillTime:HH:mm}\n" +
                             $"KB: {killMail.KbUrl}\n" +
                             $"Total worth: {killMail.TotalValue.ToString("N0", numberFormatingCulture)} ISK";
