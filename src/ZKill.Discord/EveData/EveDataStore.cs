@@ -28,7 +28,9 @@ namespace ZKill.Discord.EveData
         public EveDataStore(ILogger logger)
         {
             _logger = logger;
-            var dataDirectory = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().CodeBase.Remove(0, @"file:///".Length)), "data");
+            var dataDirectory = Path.Combine(Directory.GetCurrentDirectory(), "data");
+
+            _logger.Log($"Data directory: {dataDirectory}");
             LoadSolarSystems(dataDirectory);
             LoadEveItems(dataDirectory);
         }
