@@ -7,7 +7,7 @@ namespace ZKill.Discord.EveData
 {
     public class EveApiClient
     {
-        private const string ApiHostAdress = "https://esi.tech.ccp.is";
+        private const string ApiHostAdress = "https://esi.evetech.net";
 
         private static readonly HttpClient Client = new HttpClient
         {
